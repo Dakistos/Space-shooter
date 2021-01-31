@@ -9,19 +9,45 @@ public class md_Bullet : MonoBehaviour
 	float height;
 	float width;
 
+    public float speed = 5f;
+    public float deactivate_Timer = 3f;
+
+    [HideInInspector]
+    public bool is_EnemyBullet = false;
+
     void Start()
     {
 		cam = Camera.main;
 		height = cam.orthographicSize;
 		width = height * cam.aspect;
-	}
 
-	// Destroy bullet if it out of screen
+        if (is_EnemyBullet)
+            speed *= 5f;
+
+        Invoke("md_DeactivateGameObject", deactivate_Timer);
+    }
+
+	
     void Update()
 	{
-		if(transform.position.y > height -1 || transform.position.y < -height +1)
+        //Move();
+        // Destroy bullet if it out of screen
+        if (transform.position.y > height -1 || transform.position.y < -height +1)
         {
 			Destroy(gameObject);
         }
 	}
+
+    void md_DeactivateGameObject()
+    {
+        Destroy(gameObject);
+    }
+
+    void OnTriggerEnter2D(Collider2D target)
+    {
+        if (target.tag == "Bullet" || target.tag == "EnemyBullet")
+        {
+            Destroy(gameObject);
+        }
+    }
 }

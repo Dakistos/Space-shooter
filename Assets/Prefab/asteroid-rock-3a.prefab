@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1532985456661577747}
   m_Layer: 0
   m_Name: asteroid-rock-3a
-  m_TagString: Enemy
+  m_TagString: capsuleBonus
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,5 +181,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xSpeed: 0
   ySpeed: 4
+  canShoot: 0
   projectile: {fileID: 0}
   points: 30

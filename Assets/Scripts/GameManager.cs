@@ -11,9 +11,9 @@ public class GameManager : MonoBehaviour
 	}
 	public static States state;
 
-	int level;
-	int score;
-	int lives;
+	public int level;
+	public int score;
+	public int lives;
 
 	public Text levelTxt;
 	public Text scoreTxt;
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
-		//messageTxt.gameObject.SetActive(false);
+		messageTxt.gameObject.SetActive(false);
 
 		player = GameObject.FindWithTag("Player");
 
@@ -49,10 +49,11 @@ public class GameManager : MonoBehaviour
 			messageTxt.gameObject.SetActive(true);
 		}
 
+
 		state = States.wait;
 	}
 
-	public void LaunchGame()
+	public void md_LaunchGame()
 	{
 		// interface
 		waitToStart.gameObject.SetActive(false);
@@ -65,25 +66,26 @@ public class GameManager : MonoBehaviour
 			Destroy(enemy);
 		}
 		// lancer une partie
-		InitGame();
-		LoadLevel();
+		md_InitGame();
+		md_LoadLevel();
 	}
 
 
-	void LoadLevel()
+	void md_LoadLevel()
 	{
 		state = States.play;
-		UpdateTexts();
+
+		md_UpdateTexts();
 	}
 
-	void InitGame()
+	void md_InitGame()
 	{
 		level = 1;
 		score = 0;
 		lives = 5;
 	}
 
-	void UpdateTexts()
+	public void md_UpdateTexts()
 	{
 		levelTxt.text = "wave: " + level;
 		scoreTxt.text = "score: " + score;
@@ -91,13 +93,13 @@ public class GameManager : MonoBehaviour
 	}
 
 
-	public void AddScore(int points)
+	public void md_AddScore(int points)
 	{
 		score += points;
-		UpdateTexts();
+		md_UpdateTexts();
 	}
 
-	private void Update()
+	void Update()
 	{
 		if (state == States.play)
 		{
@@ -106,32 +108,19 @@ public class GameManager : MonoBehaviour
 	}
 
 
-	void EndOfLevel()
+	void md_EndOfLevel()
 	{
 		GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
 		if (enemys.Length == 0)
 		{
-			StartCoroutine(LevelUp());
+			//StartCoroutine(md_LevelUp());
 		}
 	}
 
-	IEnumerator LevelUp()
-	{
-		state = States.levelup;
-		// afficher message "level up"
-		messageTxt.text = "level up";
-		messageTxt.gameObject.SetActive(true);
-		// marquer une pause
-		yield return new WaitForSecondsRealtime(3f);
-		// cacher le message
-		messageTxt.gameObject.SetActive(false);
-		level += 1;
-		LoadLevel();
-		UpdateTexts();
-	}
 
 
-	public void KillPlayer()
+
+	public void md_KillPlayer()
 	{
 		StartCoroutine(PlayerAgain());
 	}
@@ -141,15 +130,19 @@ public class GameManager : MonoBehaviour
 		state = States.dead;
 
 		GameObject boomGO = Instantiate(boom, player.transform.position, Quaternion.identity);
+		player.SetActive(false);
 
+		yield return new WaitForSecondsRealtime(2f);
+		player.SetActive(true);
+		state = States.play;
 		lives -= 1;
 		player.SetActive(false);
-		UpdateTexts();
+		md_UpdateTexts();
 		if (lives <= 0)
 		{
 			yield return new WaitForSecondsRealtime(2f);
 			Destroy(boomGO);
-			GameOver();
+			md_GameOver();
 		}
 		else
 		{
@@ -160,7 +153,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	void GameOver()
+	void md_GameOver()
 	{
 		state = States.wait;
 

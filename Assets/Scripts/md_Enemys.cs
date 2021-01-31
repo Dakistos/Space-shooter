@@ -8,13 +8,11 @@ public class md_Enemys: MonoBehaviour
 	public float ySpeed;
 	Vector2 speed;
 
-	bool canShoot;
-	//readonly float fireRate = .25f;
-	float nextFire;
+	public bool canShoot;
+	readonly float fireRate = 1f;
 
 	// pouvoir tirer
 	public GameObject projectile;
-	//readonly float projectileSpeed = 4f;
 
 	public int points = 10;
 	float bound_Y = 11f;
@@ -26,10 +24,15 @@ public class md_Enemys: MonoBehaviour
 
 	void Start()
 	{
-		//gameManager = GameObject.Find("GameManager").GetComponent<GameManager>()
+		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
 		// appliquer la vélocité
 		rb = GetComponent<Rigidbody2D>();
+
+		if (canShoot)
+        {
+			md_Shoot();
+		}
 
 	}
 
@@ -50,23 +53,33 @@ public class md_Enemys: MonoBehaviour
         }
 	}
 
+	void md_Shoot()
+    {
+		GameObject bullet = Instantiate(projectile, transform.position, Quaternion.identity);
+		// Set behaviour of enemy bullet
+		bullet.GetComponent<md_Bullet>().is_EnemyBullet = true;
+		bullet.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(0, -bullet.GetComponent<md_Bullet>().speed, 0);
 
-	void OnTriggerEnter2D(Collider2D collision)
+		Invoke("md_Shoot", fireRate);
+	}
+
+
+	void OnTriggerEnter2D(Collider2D target)
 	{
 		// Bullet  Player  Enemy
 
-		if (collision.tag == "Player")
+		if (target.tag == "Player")
 		{
-			//gameManager.KillPlayer();
+			gameManager.md_KillPlayer();
 		}
-		else if (collision.tag == "Bullet")
+		else if (target.tag == "Bullet")
 		{
 		//détruire la bullet
-			Destroy(collision.gameObject);
+			Destroy(target.gameObject);
 			// destruction = asteroid initial
 			Destroy(gameObject);
 			// score
-			//gameManager.AddScore(points);
+			gameManager.md_AddScore(points);
 		}
 	}
 }

@@ -13,10 +13,9 @@ GameObject:
   - component: {fileID: 5126167562009572138}
   - component: {fileID: 5126167562009572139}
   - component: {fileID: 5126167562009572143}
-  - component: {fileID: 5126167562009572142}
   m_Layer: 0
   m_Name: asteroid-rock-3b
-  m_TagString: Enemy
+  m_TagString: capsuleBonus
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -175,19 +174,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864ca847bd0ab427f933383c2e2d55f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5126167562009572142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5126167562009572116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 006e4ebc4f8b54b2fbc060529745df5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  xSpeed: 0
-  ySpeed: 3
-  projectile: {fileID: 0}
-  points: 30

@@ -12,24 +12,29 @@ public class md_Ship : MonoBehaviour
 	readonly float projectileSpeed = 4f;
 
 	// controler la fréquence de tir
-	readonly float fireRate = .25f;
+	readonly float fireRate = .5f;
 	float nextFire;
 
 	Rigidbody2D rb;
+	GameManager gameManager;
+	md_CapsuleBonus capsule;
 
 	void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
+		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+		capsule = GameObject.Find("GameManager").GetComponent<md_CapsuleBonus>();
 	}
 
 	void Update()
 	{
-		//if (GameManager.state == GameManager.States.play)
-		//{
+		if (GameManager.state == GameManager.States.play)
+		{
 			md_Move();
 			md_Fire();
-		//}
+		}
 
+		// Block player if he goes on left or right bounds
 		Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
 		pos.x = Mathf.Clamp01(pos.x);
 		transform.position = Camera.main.ViewportToWorldPoint(pos);
@@ -53,18 +58,23 @@ public class md_Ship : MonoBehaviour
 		bullet.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(0, projectileSpeed, 0);
 	}
 
-	// Move the player when keyboard's key are pushed (Left, Right)
+	// Move the player when keyboard's arrows are pushed (Left, Right)
 	void md_Move()
 	{
-		/*	if(Input.GetKey(KeyCode.LeftArrow))
-			{
-				transform.position += transform.right * speed * Time.deltaTime;
-			}
-			if(Input.GetKey(KeyCode.RightArrow))
-			{
-				transform.position += transform.right * -speed * Time.deltaTime;
-			}*/
-
 		rb.AddForce(new Vector2(Input.GetAxis("Horizontal") * speed, 0));
+	}
+
+	void OnTriggerEnter2D(Collider2D target)
+	{
+		if (target.tag == "capsuleBonus")
+		{			
+			capsule.md_heal();
+			Destroy(target.gameObject);
+		}
+
+		if (target.tag == "EnemyBullet")
+        {
+			gameManager.md_KillPlayer();
+        }
 	}
 }
