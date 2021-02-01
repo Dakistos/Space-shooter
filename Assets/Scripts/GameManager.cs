@@ -101,24 +101,7 @@ public class GameManager : MonoBehaviour
 
 	void Update()
 	{
-		if (state == States.play)
-		{
-			//EndOfLevel();
-		}
 	}
-
-
-	void md_EndOfLevel()
-	{
-		GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
-		if (enemys.Length == 0)
-		{
-			//StartCoroutine(md_LevelUp());
-		}
-	}
-
-
-
 
 	public void md_KillPlayer()
 	{
@@ -146,7 +129,7 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
-			yield return new WaitForSecondsRealtime(3f);
+			yield return new WaitForSecondsRealtime(1.5f);
 			Destroy(boomGO);
 			player.SetActive(true);
 			state = States.play;
