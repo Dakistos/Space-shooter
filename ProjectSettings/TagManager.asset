@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - EnemyBullet
   - capsuleBonus
+  - ShieldAura
   layers:
   - Default
   - TransparentFX

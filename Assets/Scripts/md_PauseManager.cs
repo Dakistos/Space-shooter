@@ -18,11 +18,11 @@ public class md_PauseManager : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.P))
 		{
-			PauseGame();
+			md_PauseGame();
 		}
 	}
 
-	void PauseGame()
+	void md_PauseGame()
 	{
 		gameIsPaused = !gameIsPaused;
 		if (gameIsPaused)

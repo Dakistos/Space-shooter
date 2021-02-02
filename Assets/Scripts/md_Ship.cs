@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class md_Ship : MonoBehaviour
 {
-	// accélération / décélération
+	// Player's speed
 	readonly float speed = 3f;
 
-	// pouvoir tirer
-	public GameObject projectile;
-	readonly float projectileSpeed = 4f;
+	// Player's shield
+	public Transform shield;
+	public bool activateShield;
+	int shieldLife = 10;
 
-	// controler la fréquence de tir
-	readonly float fireRate = .5f;
+	// Allow firing
+	public GameObject projectile;
+	readonly float projectileSpeed = 5f;
+
+	// Fire rate control
+	readonly float fireRate = .6f;
 	float nextFire;
 
 	Rigidbody2D rb;
@@ -24,6 +29,11 @@ public class md_Ship : MonoBehaviour
 		rb = GetComponent<Rigidbody2D>();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		capsule = GameObject.Find("GameManager").GetComponent<md_CapsuleBonus>();
+
+		// Deactivate shield child object
+		shield = transform.Find("shieldAura");
+		activateShield = false;
+		shield.gameObject.SetActive(false);
 	}
 
 	void Update()
@@ -32,6 +42,7 @@ public class md_Ship : MonoBehaviour
 		{
 			md_Move();
 			md_Fire();
+			//md_HasShieldTest();
 		}
 
 		// Block player if he goes on left or right bounds
@@ -64,17 +75,54 @@ public class md_Ship : MonoBehaviour
 		rb.AddForce(new Vector2(Input.GetAxis("Horizontal") * speed, 0));
 	}
 
+	// Only to test shield with Editor checkbox (there is not necessary for the game)
+	void md_HasShieldTest()
+    {
+		if (activateShield)
+        {
+			shield.gameObject.SetActive(true);
+			activateShield = true;
+        } else
+        {
+			shield.gameObject.SetActive(false);
+			activateShield = false;
+		}
+    }
+
 	void OnTriggerEnter2D(Collider2D target)
 	{
-		if (target.tag == "capsuleBonus")
+		if (target.name == "health(Clone)")
 		{			
 			capsule.md_heal();
 			Destroy(target.gameObject);
 		}
-
-		if (target.tag == "EnemyBullet")
+		if (target.name == "shield(Clone)")
         {
-			gameManager.md_KillPlayer();
+			activateShield = true;
+			shieldLife = 10;
+			capsule.md_Shield();
+			Destroy(target.gameObject);
+        }
+
+		if (target.tag == "EnemyBullet" || target.tag == "Enemy")
+        {
+			if (activateShield)
+			{
+				Debug.Log("Je suis ici");
+				if (shieldLife <= 0)
+                {
+					activateShield = false;
+					shield.gameObject.SetActive(false);
+                }
+
+				shieldLife -= 1;
+				Destroy(target.gameObject);
+			} 
+			else
+            {
+				gameManager.md_KillPlayer();
+				Destroy(target.gameObject);
+			}
         }
 	}
 }

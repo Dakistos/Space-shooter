@@ -49,12 +49,11 @@ MonoBehaviour:
   score: 0
   lives: 0
   levelTxt: {fileID: 0}
-  scoreTxt: {fileID: 0}
-  livesTxt: {fileID: 0}
-  messageTxt: {fileID: 0}
-  asteroid: {fileID: 3782338015202311802, guid: 35afefbbedc954f7b867b8d2acaaa265, type: 3}
+  scoreTxt: {fileID: 1374416704270132512, guid: 69262fdfcf711054aad0d18844c445ea, type: 3}
+  livesTxt: {fileID: 8596194311345738555, guid: 0a05eb113ac64054ab4b74b274cd85ef, type: 3}
+  messageTxt: {fileID: 6668278333494581573, guid: 4719adafc0ac4c844a4ab1b54c064b70, type: 3}
   boom: {fileID: 8397896712695084404, guid: dea48edaa0f5e43d4808fd47f6430c1f, type: 3}
-  waitToStart: {fileID: 0}
+  waitToStart: {fileID: 1138380507425946920, guid: 8738d0016fa73d14496cb72dca2d04d2, type: 3}
 --- !u!114 &7475213252021609616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2baa0cf501fe48b685ce38dbedbcd1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseTxt: {fileID: 0}
+  pauseTxt: {fileID: 5377379620535838111, guid: 226a2d5b58cfc6942bc0a977c816f4ac, type: 3}
 --- !u!114 &7475213252021609618
 MonoBehaviour:
   m_ObjectHideFlags: 0

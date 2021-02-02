@@ -11,24 +11,22 @@ public class GameManager : MonoBehaviour
 	}
 	public static States state;
 
-	public int level;
 	public int score;
 	public int lives;
 
-	public Text levelTxt;
 	public Text scoreTxt;
 	public Text livesTxt;
 
 	public Text messageTxt;
 
 	GameObject player;
-	public GameObject asteroid; // le grand prefab
 	public GameObject boom;
 
 	Camera cam;
 	float height, width;
+	
 
-	public GameObject waitToStart; // panel
+	public GameObject waitToStart;
 
 	void Start()
 	{
@@ -53,19 +51,21 @@ public class GameManager : MonoBehaviour
 		state = States.wait;
 	}
 
-	public void md_LaunchGame()
+    public void md_LaunchGame()
 	{
 		// interface
 		waitToStart.gameObject.SetActive(false);
 		messageTxt.gameObject.SetActive(false);
-		// restaurer après une partie
+
+		// Restore a game
 		player.SetActive(true);
 		GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
 		foreach (GameObject enemy in enemys)
 		{
 			Destroy(enemy);
 		}
-		// lancer une partie
+
+		// Launch a game
 		md_InitGame();
 		md_LoadLevel();
 	}
@@ -80,29 +80,25 @@ public class GameManager : MonoBehaviour
 
 	void md_InitGame()
 	{
-		level = 1;
 		score = 0;
 		lives = 5;
 	}
 
+	// Method to update different texts
 	public void md_UpdateTexts()
 	{
-		levelTxt.text = "wave: " + level;
 		scoreTxt.text = "score: " + score;
 		livesTxt.text = "lives: " + lives;
 	}
 
-
+	// Method to add score
 	public void md_AddScore(int points)
 	{
 		score += points;
 		md_UpdateTexts();
 	}
 
-	void Update()
-	{
-	}
-
+	// Method to call when something append to the player (down life or kill him)
 	public void md_KillPlayer()
 	{
 		StartCoroutine(PlayerAgain());
@@ -112,6 +108,7 @@ public class GameManager : MonoBehaviour
 	{
 		state = States.dead;
 
+		// Instantiate sprite boom when something hit player
 		GameObject boomGO = Instantiate(boom, player.transform.position, Quaternion.identity);
 		player.SetActive(false);
 
@@ -121,6 +118,8 @@ public class GameManager : MonoBehaviour
 		lives -= 1;
 		player.SetActive(false);
 		md_UpdateTexts();
+
+		// Display game over when player lives = 0
 		if (lives <= 0)
 		{
 			yield return new WaitForSecondsRealtime(2f);
@@ -140,6 +139,7 @@ public class GameManager : MonoBehaviour
 	{
 		state = States.wait;
 
+		// check if actual score is higher than highscore then set it if it's true
 		int highscore = PlayerPrefs.GetInt("highscore");
 		if (score > highscore)
 		{
@@ -154,8 +154,4 @@ public class GameManager : MonoBehaviour
 		messageTxt.gameObject.SetActive(true);
 		waitToStart.gameObject.SetActive(true);
 	}
-
-
-
-
 }

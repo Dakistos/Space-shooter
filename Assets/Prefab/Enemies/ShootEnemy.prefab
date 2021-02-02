@@ -159,8 +159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 006e4ebc4f8b54b2fbc060529745df5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xSpeed: 0
-  ySpeed: 3
   canShoot: 1
   projectile: {fileID: 3622517952302768556, guid: f6890548ae796fa4487b02be8d119a40, type: 3}
   points: 10

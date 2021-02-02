@@ -4,81 +4,90 @@ using UnityEngine;
 
 public class md_Enemys: MonoBehaviour
 {
-	public float xSpeed;
-	public float ySpeed;
-	Vector2 speed;
+	float maxValue = 7f; // Max value the enemys can reach (y axis)
+	float minValue = -9.5f; // Min value the enemys can reach (y axis)
+	float position_Y = -11f; // Set enemy start position
+	public float speed = 4f;
+
 
 	public bool canShoot;
 	readonly float fireRate = 1f;
+	float nextFire;
 
-	// pouvoir tirer
 	public GameObject projectile;
 
 	public int points = 10;
-	float bound_Y = 11f;
-
-	Rigidbody2D rb;
 
 	GameManager gameManager;
+	GameObject player;
 
 
 	void Start()
 	{
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-
-		// appliquer la vélocité
-		rb = GetComponent<Rigidbody2D>();
-
-		if (canShoot)
-        {
-			md_Shoot();
-		}
-
+		player = GameObject.Find("Player");
 	}
 
 	void Update()
 	{
 		md_Move();
+		if (canShoot)
+		{
+			nextFire += Time.deltaTime;
+			if (nextFire > fireRate)
+            {
+				md_Shoot();
+				nextFire = 0;
+			}
+		}
 	}
 
 	void md_Move()
     {
-		Vector3 temp = transform.position;
-		speed = new Vector2(xSpeed, ySpeed);
-		rb.velocity = speed;
+			// Move the enemy
+			position_Y += Time.deltaTime * speed;
+			transform.position = new Vector2(transform.position.x, position_Y);
 
-		if(temp.y > bound_Y)
-        {
-			Destroy(gameObject);
-        }
+			// If enemy position reach the up y axis limit => change direction to down
+			if (position_Y >= maxValue)
+			{
+				speed *= -1;
+				position_Y = maxValue;
+			}
+			// Else if enemy position reach the down y axis limit => change direction to up
+			else if (position_Y <= minValue)
+			{
+				speed *= -1;
+				position_Y = minValue;
+			}
 	}
 
 	void md_Shoot()
     {
-		GameObject bullet = Instantiate(projectile, transform.position, Quaternion.identity);
-		// Set behaviour of enemy bullet
-		bullet.GetComponent<md_Bullet>().is_EnemyBullet = true;
-		bullet.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(0, -bullet.GetComponent<md_Bullet>().speed, 0);
-
-		Invoke("md_Shoot", fireRate);
+		if(nextFire > fireRate)
+        {
+			GameObject bullet = Instantiate(projectile, transform.position, Quaternion.identity);
+			// Set behaviour of enemy bullet
+			bullet.GetComponent<md_Bullet>().is_EnemyBullet = true;
+			bullet.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(0, -bullet.GetComponent<md_Bullet>().speed, 0);
+		}
 	}
 
 
 	void OnTriggerEnter2D(Collider2D target)
 	{
-		// Bullet  Player  Enemy
-
 		if (target.tag == "Player")
 		{
-			gameManager.md_KillPlayer();
+			// Destroy enemy
+			Destroy(gameObject);
 		}
 		else if (target.tag == "Bullet")
 		{
-		//détruire la bullet
+			// Destroy bullet
 			Destroy(target.gameObject);
-			// destruction = asteroid initial
+			// Destroy enemy
 			Destroy(gameObject);
-			// score
+			// add score
 			gameManager.md_AddScore(points);
 		}
 	}

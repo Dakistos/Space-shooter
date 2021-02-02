@@ -7,12 +7,10 @@ public class md_EnemySpawner : MonoBehaviour
 
     public enum SpawnState { spawn, wait, count }
 
+    public float timer = 2f;
     public GameObject[] enemyPrefab;
-    public GameObject bonus;
 
     md_CapsuleBonus capsule;
-
-    public float timer = 2f;
     Vector3 LastEnemyPosition;
 
     public SpawnState state = SpawnState.count;
@@ -28,6 +26,7 @@ public class md_EnemySpawner : MonoBehaviour
         {
             if (state == SpawnState.wait)
             {
+                // Check last enemy position and drop capsule if 0 enemys
                 md_LastEnemy();
             }
 
@@ -36,18 +35,20 @@ public class md_EnemySpawner : MonoBehaviour
                 if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
                 {
                     // Trigger a wave
-                    md_SpawnEnemies();
+                    StartCoroutine(md_SpawnEnemies());
                 }
             }
         }
     }
 
-    void md_SpawnEnemies() 
+    IEnumerator md_SpawnEnemies() 
     {
         state = SpawnState.spawn;
 
         int enemySpawnRange = Random.Range(3, 5);
 
+        yield return new WaitForSeconds(2f);
+        // Instantiate enemys 
         for (int i = 0; i < enemySpawnRange; i++)
           Instantiate(enemyPrefab[Random.Range(0, enemyPrefab.Length)], new Vector3(Random.Range(5f, -5f), transform.position.y), Quaternion.Euler(180,0,0));
 
@@ -64,7 +65,7 @@ public class md_EnemySpawner : MonoBehaviour
         // Drop bonus on last enemy position (call method from capsuleBonus class)
         if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
         {
-            Debug.Log("On drop un truc ici" + LastEnemyPosition);
+            //Debug.Log("On drop un truc ici" + LastEnemyPosition);
             capsule.md_GetBonus(LastEnemyPosition);
         }
     }

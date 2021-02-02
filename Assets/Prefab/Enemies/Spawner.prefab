@@ -44,11 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bf674c022b66ad4aa7ed0ff474404fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timer: 2
   enemyPrefab:
   - {fileID: 5495206653300705101, guid: 3038bbe162537f041907d4d8c26caa9d, type: 3}
   - {fileID: 446197622207493878, guid: 5ee8c47e383cd504ca8d07312ea23f2a, type: 3}
-  bonus: {fileID: 0}
-  timer: 2
   state: 2
 --- !u!114 &2607831714767647451
 MonoBehaviour:
@@ -64,4 +63,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capsule:
   - {fileID: 7977902944354017103, guid: ba883c7a4f0b57f448641a8183675fbc, type: 3}
-  speed: 3
+  - {fileID: 3110323507837904315, guid: 4375a83a9b69988479c8a359cb44abd7, type: 3}
+  speed: 2

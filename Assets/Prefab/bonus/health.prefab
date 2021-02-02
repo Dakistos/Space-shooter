@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7977902944354017096}
   - component: {fileID: -5508779731278932129}
   - component: {fileID: 6331680360082418939}
+  - component: {fileID: -2635130515689009835}
   m_Layer: 0
   m_Name: health
   m_TagString: capsuleBonus
@@ -137,3 +138,17 @@ PolygonCollider2D:
       - {x: 0.11, y: -0.015}
       - {x: 0.11, y: 0.074999996}
       - {x: 0.08, y: 0.105}
+--- !u!114 &-2635130515689009835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7977902944354017103}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a32495c52e6bd145aa2f6b43db715f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  capsule: []
+  speed: 5

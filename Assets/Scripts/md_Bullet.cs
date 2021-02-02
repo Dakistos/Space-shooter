@@ -10,7 +10,6 @@ public class md_Bullet : MonoBehaviour
 	float width;
 
     public float speed = 5f;
-    public float deactivate_Timer = 3f;
 
     [HideInInspector]
     public bool is_EnemyBullet = false;
@@ -22,26 +21,18 @@ public class md_Bullet : MonoBehaviour
 		width = height * cam.aspect;
 
         if (is_EnemyBullet)
-            speed *= 5f;
-
-        Invoke("md_DeactivateGameObject", deactivate_Timer);
+            speed *= speed;
     }
 
 	
     void Update()
 	{
-        //Move();
         // Destroy bullet if it out of screen
         if (transform.position.y > height -1 || transform.position.y < -height +1)
         {
 			Destroy(gameObject);
         }
 	}
-
-    void md_DeactivateGameObject()
-    {
-        Destroy(gameObject);
-    }
 
     void OnTriggerEnter2D(Collider2D target)
     {
