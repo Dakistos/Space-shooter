@@ -2,6 +2,8 @@
 
 Jeu de style "Shoot'em Up" réalisé avec Unity dans le cadre d'un cours.
 
+![alt text](https://github.com/Dakistos/Space-shooter/blob/master/Assets/Sprites/screenshot.png)
+
 ## Gameplay
 
 - Joueur :
