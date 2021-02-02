@@ -561,6 +561,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: ShieldAura
       objectReference: {fileID: 0}
+    - target: {fileID: 4303384956708304558, guid: fb7b78fc503fb9b458ccc15a553ae53c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4303384957116040859, guid: fb7b78fc503fb9b458ccc15a553ae53c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -641,6 +645,10 @@ PrefabInstance:
     - target: {fileID: 4104896965047021501, guid: dfde93eab63483e48824e2585bd4b5e1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165577144065108687, guid: dfde93eab63483e48824e2585bd4b5e1, type: 3}
+      propertyPath: activateShield
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfde93eab63483e48824e2585bd4b5e1, type: 3}
