@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
 	public enum States
 	{
-		wait, play, levelup, dead
+		wait, play, dead
 	}
 	public static States state;
 

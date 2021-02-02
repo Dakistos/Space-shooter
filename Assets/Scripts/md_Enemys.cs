@@ -9,7 +9,6 @@ public class md_Enemys: MonoBehaviour
 	float position_Y = -11f; // Set enemy start position
 	public float speed = 4f;
 
-
 	public bool canShoot;
 	readonly float fireRate = 1f;
 	float nextFire;
@@ -21,9 +20,17 @@ public class md_Enemys: MonoBehaviour
 	GameManager gameManager;
 	GameObject player;
 
+	Camera cam;
+	float height;
+	float width;
+
 
 	void Start()
 	{
+		cam = Camera.main;
+		height = cam.orthographicSize;
+		width = height * cam.aspect;
+
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		player = GameObject.Find("Player");
 	}
@@ -44,10 +51,12 @@ public class md_Enemys: MonoBehaviour
 
 	void md_Move()
     {
-			// Move the enemy
-			position_Y += Time.deltaTime * speed;
-			transform.position = new Vector2(transform.position.x, position_Y);
+		// Move the enemy
+		position_Y += Time.deltaTime * speed;
+		transform.position = new Vector2(transform.position.x, position_Y);
 
+		if (canShoot)
+        {
 			// If enemy position reach the up y axis limit => change direction to down
 			if (position_Y >= maxValue)
 			{
@@ -60,6 +69,14 @@ public class md_Enemys: MonoBehaviour
 				speed *= -1;
 				position_Y = minValue;
 			}
+		} 
+		else
+        {
+			if (transform.position.y > height - 1)
+            {
+				Destroy(gameObject);
+            }
+        }
 	}
 
 	void md_Shoot()
